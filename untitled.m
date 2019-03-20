@@ -87,9 +87,9 @@ rho = ones(1,100) * radius;
 [x,y] = pol2cart(theta,rho);
 x = x + centre(1);
 y = y + centre(2);
-h = plot(x,y,'k-');
-line([centre(1) x1] ,[centre(2),y1]);
-line([centre(1) x2] ,[centre(2),y2]);
+h = plot(x,y,'k');
+%line([centre(1) x1] ,[centre(2),y1]);
+%line([centre(1) x2] ,[centre(2),y2]);
 
 
 function axes()
@@ -102,38 +102,30 @@ line(xL, [0 0],'color','k');  %x-axis
 
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
-q1_min=str2double(handles.q1min.String)*pi/180;
-q1_max=str2double(handles.q1max.String)*pi/180;
-q2_min=str2double(handles.q2min.String)*pi/180;
-q2_max=str2double(handles.q2max.String)*pi/180;
-q3_min=str2double(handles.q3min.String)*pi/180;
-q3_max=str2double(handles.q3max.String)*pi/180;
+cla(gca);
+q1_min=str2double(handles.q1min.String);
+q1_max=str2double(handles.q1max.String);
+q2_min=str2double(handles.q2min.String);
+q2_max=str2double(handles.q2max.String);
+q3_min=str2double(handles.q3min.String);
+q3_max=str2double(handles.q3max.String);
 L1=str2double(handles.L1.String);
 L2=str2double(handles.L2.String);
 L3=str2double(handles.L3.String);
 
-x1min=L1*cos(q1_min);
-x1max=L1*cos(q1_max);
-x2min1=x1min+L2*cos(q1_min+q2_min);
-x2max1=x1min+L2*cos(q1_min+q2_max);
-x2min2=x1max+L2*cos(q1_max+q2_min);
-x2max2=x1max+L2*cos(q1_max+q2_max);
-
-
-y1min=L1*sin(q1_min);
-y1max=L1*sin(q1_max);
-y2min1=y1min+L2*sin(q1_min+q2_min);
-y2max1=y1min+L2*sin(q1_min+q2_max);
-y2min2=y1max+L2*sin(q1_max+q2_min);
-y2max2=y1max+L2*sin(q1_max+q2_max);
 
 hold on
-axes();
-ang([x1min y1min],L2,[q2_min+q1_min q2_max+q1_min],x2min1,y2min1,x2max1,y2max1);
-ang([x1max y1max],L2,[q2_min+q1_max q2_max+q1_max],x2min2 ,y2min2,x2max2,y2max2);
+%ang([x1min y1min],L2,[q2_min+q1_min q2_max+q1_min],x2min1,y2min1,x2max1,y2max1);
+%ang([x1max y1max],L2,[q2_min+q1_max q2_max+q1_max],x2min2 ,y2min2,x2max2,y2max2);
 
-x=[x2min1 x2max2];
-y=[y2min1 y2max2];
+for i=(q1_min:2:q1_max)
+    for j=(q2_min:2:q2_max)
+        for k=(q3_min:2:q3_max)
+            plot (L1*cosd(i)+L2*cosd(i+j)+L3*cosd(i+j+k),L1*sind(i)+L2*sind(i+j)+L3*sind(i+j+k),'.','color','k','markersize',15);
+        end
+    end
+end
+axes();
 
 
 
